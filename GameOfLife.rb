@@ -3,34 +3,37 @@ class GameOfLife
     def populated(game)
         game.each_with_index do |row, index_row|
             row.each_with_index do |cell, index_cell|
-                count_neighbors(game, index_row, index_cell)
+                numero = count_neighbors(game, index_row, index_cell)
+                puts "#{numero}"
             end
         end
     end
 
     def count_neighbors(game, index_row, index_cell)
-        previous_row = index_row - 1
-        next_row = index_row + 1
-        index_previous_neighbor = index_cell - 1
-        index_next_neighbor = index_cell + 1
+        contador = 0
+        matrix_size = game[index_row].length
         puts "CURRENT #{game[index_row][index_cell]}"
-        for i in index_cell..index_next_neighbor
-            if(previous_row > 0) 
-                puts "#{game[previous_row][i]}"
-            end  
+        puts "#{game[index_row - 1][index_cell]}"
+        puts "INDEX #{index_cell}"
+        for j in (index_row - 1)..(index_row + 1)
+            for i in (index_cell - 1)..(index_cell + 1)
+                if i >= 0 && j >= 0 && i < matrix_size && j < matrix_size
+                    if(game[j][i] != 0) 
+                        contador += 1
+                    end
+                    puts "Test #{j} - #{i}"
+                end
+            end
         end
-        for i in index_cell..index_previous_neighbor
-            if(previous_row > 0) 
-                puts "#{game[next_row][i]}"
-            end  
-        end
+
+        return (contador - 1)
     end
 
 end
 
 s = GameOfLife.new
 s.populated([
-    ["0A","1A","2A"],
-    ["0B","1B","2B"],
-    ["0C","1C","2C"],
+    [1,1,1],
+    [1,1,1],
+    [1,1,1],
 ])
